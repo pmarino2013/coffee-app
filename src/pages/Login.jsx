@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { postAuth } from "../helpers/autentication";
 
 import logo from "../assets/coffee.png";
+import { useEffect } from "react";
 
 const Login = () => {
+  const isMounted = useRef(true);
+
   const history = useHistory();
 
   const [formValue, setFormValue] = useState({
@@ -14,6 +17,27 @@ const Login = () => {
     password: "",
   });
   const [btnDisable, setBtnDisable] = useState(false);
+
+  const [login, setLogin] = useState({
+    ok: null,
+    msg: "",
+    token: "",
+  });
+
+  useEffect(() => {
+    if (login.token) {
+      localStorage.setItem("crypto_app_user", JSON.stringify(login.token));
+      setTimeout(() => {
+        history.push("/");
+      }, 3000);
+    }
+  }, [login, history]);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleChange = ({ target }) => {
     setFormValue({
@@ -28,18 +52,22 @@ const Login = () => {
 
     if (email && password) {
       setBtnDisable(true);
-      postAuth(formValue).then((respuesta) => {
-        const { msg, token } = respuesta;
-        setBtnDisable(false);
-        Swal.fire(msg);
+      if (isMounted.current) {
+        postAuth(formValue).then((respuesta) => {
+          setLogin({
+            ok: respuesta.ok,
+            msg: respuesta.msg,
+            token: respuesta.token,
+          });
+          // const { msg, token } = respuesta;
+          setBtnDisable(false);
 
-        localStorage.setItem("crypto_app_user", JSON.stringify(token));
-        history.push("/");
-        setFormValue({
-          email: "",
-          password: "",
+          setFormValue({
+            email: "",
+            password: "",
+          });
         });
-      });
+      }
     }
   };
 
@@ -92,6 +120,17 @@ const Login = () => {
                     Ingresar
                   </button>
                 </div>
+                {login.ok === false && (
+                  <div className="alert alert-danger mt-3" role="alert">
+                    {login.msg}
+                  </div>
+                )}
+
+                {login.ok === true && (
+                  <div className="alert alert-success mt-3" role="alert">
+                    {login.msg}
+                  </div>
+                )}
               </form>
             </div>
           </div>
