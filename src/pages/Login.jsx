@@ -54,10 +54,11 @@ const Login = () => {
       setBtnDisable(true);
       if (isMounted.current) {
         postAuth(formValue).then((respuesta) => {
+          const { ok, msg, token } = respuesta;
           setLogin({
-            ok: respuesta.ok,
-            msg: respuesta.msg,
-            token: respuesta.token,
+            ok,
+            msg,
+            token,
           });
           // const { msg, token } = respuesta;
           setBtnDisable(false);

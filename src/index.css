@@ -30,10 +30,41 @@ code {
 .logo {
   width: 50px;
 }
+.logo-nav {
+  width: 30px;
+}
 
 .carousel-container {
   height: 500px;
 }
 .carousel-img {
   height: 100%;
+}
+
+/* .carousel-inner {
+  height: 500px;
+  object-fit: cover;
+} */
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  z-index: 1;
+}
+
+@media (min-width: 300px) {
+  .carousel-inner {
+    height: 200px;
+    object-fit: cover;
+  }
+}
+@media (min-width: 768px) {
+  .carousel-inner {
+    height: 500px;
+    object-fit: cover;
+  }
 }
