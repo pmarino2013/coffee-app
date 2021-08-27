@@ -1,14 +1,22 @@
 import React from "react";
+
 import { Route, Redirect } from "react-router-dom";
 
 const ProtectedRoute = ({ component: Component, ...resto }) => {
-  const isAuthenticated = localStorage.getItem("crypto_app_user") || null;
+  const auth = JSON.parse(localStorage.getItem("auth")) || null;
+
+  // let validar = tokenAuth.split(".")[1];
+  // validar = window.btoa(validar);
+  // if (window.atob(validar).includes("{")) {
+  //   validar = JSON.parse(window.atob(validar));
+  //   console.log(validar);
+  // }
 
   return (
     <Route
       {...resto}
       render={(props) => {
-        if (isAuthenticated) {
+        if (auth?.usuario.uid) {
           return <Component {...props} />;
         } else {
           return <Redirect to="/login" />;

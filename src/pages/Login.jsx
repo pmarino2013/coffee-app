@@ -18,18 +18,13 @@ const Login = () => {
   });
   const [btnDisable, setBtnDisable] = useState(false);
 
-  const [login, setLogin] = useState({
-    ok: null,
-    msg: "",
-    token: "",
-  });
+  const [login, setLogin] = useState({});
 
   useEffect(() => {
     if (login.token) {
-      localStorage.setItem("crypto_app_user", JSON.stringify(login.token));
-      setTimeout(() => {
-        history.push("/");
-      }, 3000);
+      localStorage.setItem("auth", JSON.stringify(login));
+
+      history.push("/");
     }
   }, [login, history]);
 
@@ -54,13 +49,8 @@ const Login = () => {
       setBtnDisable(true);
       if (isMounted.current) {
         postAuth(formValue).then((respuesta) => {
-          const { ok, msg, token } = respuesta;
-          setLogin({
-            ok,
-            msg,
-            token,
-          });
-          // const { msg, token } = respuesta;
+          setLogin(respuesta);
+
           setBtnDisable(false);
 
           setFormValue({
@@ -121,17 +111,18 @@ const Login = () => {
                     Ingresar
                   </button>
                 </div>
+
                 {login.ok === false && (
                   <div className="alert alert-danger mt-3" role="alert">
                     {login.msg}
                   </div>
                 )}
 
-                {login.ok === true && (
+                {/* {login.ok === true && (
                   <div className="alert alert-success mt-3" role="alert">
                     {login.msg}
                   </div>
-                )}
+                )} */}
               </form>
             </div>
           </div>
