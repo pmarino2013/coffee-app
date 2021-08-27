@@ -34,9 +34,9 @@ code {
   width: 30px;
 }
 
-.carousel-container {
+/* .carousel-container {
   height: 500px;
-}
+} */
 .carousel-img {
   height: 100%;
 }
@@ -54,6 +54,13 @@ code {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   z-index: 1;
+}
+
+.text-disponible {
+  color: green;
+}
+.text-nodisponible {
+  color: red;
 }
 
 @media (min-width: 300px) {

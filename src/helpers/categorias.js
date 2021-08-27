@@ -1,9 +1,7 @@
-const url = "http://localhost:8080";
+const url = "http://localhost:8080/api/categorias";
 
-// const url = "https://restserver-pm.herokuapp.com";
-
-export const getUsuarios = async () => {
-  const resp = await fetch(`${url}/api/usuarios`, {
+export const getCategorias = async () => {
+  const resp = await fetch(url, {
     method: "GET",
 
     headers: {
@@ -15,8 +13,8 @@ export const getUsuarios = async () => {
   return datos;
 };
 
-export const getUsuarioId = async (id) => {
-  const resp = await fetch(`${url}/api/usuarios/${id}`, {
+export const getCategoriaId = async (id) => {
+  const resp = await fetch(`${url}/${id}`, {
     method: "GET",
 
     headers: {
@@ -28,7 +26,7 @@ export const getUsuarioId = async (id) => {
   return datos;
 };
 
-export const postUsuario = async (data) => {
+export const postCategoria = async (data) => {
   const resp = await fetch(`${url}/api/usuarios`, {
     method: "POST",
     body: JSON.stringify(data),
@@ -42,8 +40,8 @@ export const postUsuario = async (data) => {
   return datos;
 };
 
-export const putUsuario = async (id, data) => {
-  const resp = await fetch(`${url}/api/usuarios/${id}`, {
+export const putCategoria = async (id, data) => {
+  const resp = await fetch(`${url}/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
     headers: {
@@ -56,8 +54,8 @@ export const putUsuario = async (id, data) => {
   return datos;
 };
 
-export const deleteUsuario = async (id) => {
-  const resp = await fetch(`${url}/api/usuarios/${id}`, {
+export const deleteCategoria = async (id) => {
+  const resp = await fetch(`${url}/${id}`, {
     method: "DELETE",
 
     headers: {
