@@ -17,7 +17,7 @@ const CardProd = ({ productos }) => {
                 <strong>{producto.categoria.nombre}</strong>
                 <p className="card-text">{producto.descripcion}</p>
               </div>
-              <div class="card-footer ">
+              <div className="card-footer ">
                 {producto.disponible ? (
                   <div className="d-flex justify-content-between align-items-center">
                     <span className="text-disponible">Disponible</span>
