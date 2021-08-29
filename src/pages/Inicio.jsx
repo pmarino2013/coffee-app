@@ -31,14 +31,14 @@ const Inicio = () => {
       </div>
       <div className="container mb-3">
         <h1 className="mb-3">Elige a tu gusto ☕</h1>
-        <CardProd productos={productos} />
-        <div className="d-flex justify-content-center mt-3">
+        <div className="d-flex justify-content-center my-3">
           <BtnPaginacion
             pagina={pagina}
             totPag={totPag}
             setPagina={setPagina}
           />
         </div>
+        <CardProd productos={productos} />
       </div>
     </>
   );

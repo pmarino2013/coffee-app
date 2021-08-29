@@ -23,8 +23,9 @@ const Login = () => {
   useEffect(() => {
     if (login.token) {
       localStorage.setItem("auth", JSON.stringify(login));
-
-      history.push("/");
+      setTimeout(() => {
+        history.push("/");
+      }, 1000);
     }
   }, [login, history]);
 

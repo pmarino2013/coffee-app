@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  DropdownButton,
+  Dropdown,
+} from "react-bootstrap";
 
 import logo from "../assets/coffee.png";
+
 const CoffeeNav = () => {
+  const [usuario, setUsuario] = useState(null);
+
+  useEffect(() => {
+    const datos = JSON.parse(localStorage.getItem("auth"));
+    setUsuario(datos.usuario);
+  }, []);
+
   const history = useHistory();
   const logout = () => {
     localStorage.clear();
@@ -23,11 +37,33 @@ const CoffeeNav = () => {
             <NavLink to="/" className="nav-link text-white">
               Inicio
             </NavLink>
-            <div>
-              <button className="btn btn-outline-secondary" onClick={logout}>
-                Cerrar sesión
-              </button>
-            </div>
+
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={<i className="fa fa-user-circle-o" aria-hidden="true"></i>}
+              className="dropstart ms-2"
+              variant="success"
+            >
+              <Dropdown.Item>
+                <NavLink className="nav-link" to="/">
+                  Perfil
+                </NavLink>
+              </Dropdown.Item>
+
+              {usuario?.rol === "ADMIN_ROLE" && (
+                <Dropdown.Item>
+                  <NavLink className="nav-link" to="/admin">
+                    Administración
+                  </NavLink>
+                </Dropdown.Item>
+              )}
+              <Dropdown.Divider />
+              <Dropdown.Item>
+                <NavLink className="nav-link" to="#" onClick={logout}>
+                  Cerrar sesión
+                </NavLink>
+              </Dropdown.Item>
+            </DropdownButton>
           </Nav>
         </Navbar.Collapse>
       </Container>

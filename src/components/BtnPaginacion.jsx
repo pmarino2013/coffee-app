@@ -1,17 +1,19 @@
 import React from "react";
 
-const BtnPaginacion = ({ totPag, pagina, setPagina }) => {
+const BtnPaginacion = ({ totPag, pagina, setPagina, limite = 5 }) => {
+  let total = totPag;
   const nextPag = () => {
-    if (totPag - pagina > 1) {
-      setPagina(pagina + 5);
-      console.log(pagina);
+    // total = total - pagina;
+    console.log(pagina);
+    // setPagina(pagina + limite);
+    if (total > pagina + limite) {
+      setPagina(pagina + limite);
     }
   };
 
   const prevPag = () => {
-    console.log("presionado prev");
     if (pagina > 0) {
-      setPagina(pagina - 5);
+      setPagina(pagina - limite);
     }
   };
   return (
@@ -25,7 +27,7 @@ const BtnPaginacion = ({ totPag, pagina, setPagina }) => {
       </button>
       <button
         className="btn btn-outline-success ms-2"
-        disabled={totPag - pagina <= 1 ? true : false}
+        disabled={total < pagina + limite ? true : false}
         onClick={nextPag}
       >
         <i className="fa fa-chevron-right"></i>
