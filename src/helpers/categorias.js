@@ -1,8 +1,8 @@
 // const url = "http://localhost:8080/api/categorias";
-const url = "https://restserver-pm.herokuapp.com";
+const url = "https://restserver-pm.herokuapp.com/api/categorias";
 
-export const getCategorias = async () => {
-  const resp = await fetch(url, {
+export const getCategorias = async (desde) => {
+  const resp = await fetch(`${url}?desde=${desde}`, {
     method: "GET",
 
     headers: {
@@ -28,12 +28,12 @@ export const getCategoriaId = async (id) => {
 };
 
 export const postCategoria = async (data) => {
-  const resp = await fetch(`${url}/api/usuarios`, {
+  const resp = await fetch(`${url}`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      token: localStorage.getItem("auth"),
+      "x-token": JSON.parse(localStorage.getItem("auth")).token,
     },
   });
   const datos = await resp.json();
@@ -47,7 +47,7 @@ export const putCategoria = async (id, data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      token: localStorage.getItem("auth"),
+      "x-token": JSON.parse(localStorage.getItem("auth")).token,
     },
   });
   const datos = await resp.json();
@@ -61,7 +61,7 @@ export const deleteCategoria = async (id) => {
 
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      token: localStorage.getItem("auth"),
+      "x-token": JSON.parse(localStorage.getItem("auth")).token,
     },
   });
   const datos = await resp.json();

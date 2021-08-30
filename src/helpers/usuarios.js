@@ -34,7 +34,7 @@ export const postUsuario = async (data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      token: localStorage.getItem("auth"),
+      "x-token": JSON.parse(localStorage.getItem("auth")).token,
     },
   });
   const datos = await resp.json();
@@ -48,7 +48,7 @@ export const putUsuario = async (id, data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      token: localStorage.getItem("auth"),
+      "x-token": JSON.parse(localStorage.getItem("auth")).token,
     },
   });
   const datos = await resp.json();
@@ -62,7 +62,7 @@ export const deleteUsuario = async (id) => {
 
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      token: localStorage.getItem("auth"),
+      "x-token": JSON.parse(localStorage.getItem("auth")).token,
     },
   });
   const datos = await resp.json();

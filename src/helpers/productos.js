@@ -1,5 +1,5 @@
 // const url = "http://localhost:8080/api/productos";
-const url = "https://restserver-pm.herokuapp.com";
+const url = "https://restserver-pm.herokuapp.com/api/productos";
 
 export const getProductos = async (desde) => {
   const resp = await fetch(`${url}?desde=${desde}`, {

@@ -4,7 +4,9 @@ const BtnPaginacion = ({ totPag, pagina, setPagina, limite = 5 }) => {
   let total = totPag;
   const nextPag = () => {
     // total = total - pagina;
-    console.log(pagina);
+
+    console.log(total - (pagina + limite));
+    // console.log(pagina);
     // setPagina(pagina + limite);
     if (total > pagina + limite) {
       setPagina(pagina + limite);
@@ -27,7 +29,7 @@ const BtnPaginacion = ({ totPag, pagina, setPagina, limite = 5 }) => {
       </button>
       <button
         className="btn btn-outline-success ms-2"
-        disabled={total < pagina + limite ? true : false}
+        disabled={total - (pagina + limite) <= 0 ? true : false}
         onClick={nextPag}
       >
         <i className="fa fa-chevron-right"></i>

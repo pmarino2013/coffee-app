@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import TableCategorias from "../components/TableCategorias";
+import TableProductos from "../components/TableProductos";
 import TableUsuario from "../components/TableUsuario";
 
 const Admin = () => {
@@ -27,8 +29,19 @@ const Admin = () => {
         </div>
       </div>
       <div className="row">
-        <div className="col">
+        <div className="col-12 col-md-4 offset-md-2">
+          <h3>Usuarios</h3>
           <TableUsuario />
+        </div>
+        <div className="col-12 col-md-4">
+          <h3>Categorias</h3>
+          <TableCategorias />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <h3>Productos</h3>
+          <TableProductos />
         </div>
       </div>
     </div>
