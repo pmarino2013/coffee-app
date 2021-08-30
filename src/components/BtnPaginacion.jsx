@@ -3,11 +3,6 @@ import React from "react";
 const BtnPaginacion = ({ totPag, pagina, setPagina, limite = 5 }) => {
   let total = totPag;
   const nextPag = () => {
-    // total = total - pagina;
-
-    console.log(total - (pagina + limite));
-    // console.log(pagina);
-    // setPagina(pagina + limite);
     if (total > pagina + limite) {
       setPagina(pagina + limite);
     }

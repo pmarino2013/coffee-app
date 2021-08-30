@@ -33,7 +33,7 @@ const Admin = () => {
           <h3>Usuarios</h3>
           <TableUsuario />
         </div>
-        <div className="col-12 col-md-4">
+        <div className="col-12 col-md-4 offset-md-1">
           <h3>Categorias</h3>
           <TableCategorias />
         </div>

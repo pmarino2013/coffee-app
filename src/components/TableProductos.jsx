@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getProductos } from "../helpers/productos";
+import { getProductos, deleteProducto } from "../helpers/productos";
+import BtnPaginacion from "./BtnPaginacion";
+import ModalProductos from "./modales/ModalProductos";
 
 const TableProductos = () => {
+  const [actualizar, setActualizar] = useState("");
   const [productos, setProductos] = useState({
     datos: [],
     loading: true,
@@ -26,6 +29,9 @@ const TableProductos = () => {
     updateDatos(pagina);
   }, [pagina, show]);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const updateDatos = (pag) => {
     getProductos(pag).then((respuesta) => {
       setProductos({
@@ -35,6 +41,25 @@ const TableProductos = () => {
     });
   };
 
+  //---------------------------
+  const borrarProducto = (uid) => {
+    let produc = productos.datos.find((producto) => {
+      return producto._id === uid;
+    });
+
+    let validar = window.confirm(
+      `Esta seguro que quiere inactivar el producto ${produc.nombre}?`
+    );
+    if (validar) {
+      deleteProducto(uid).then((respuesta) => {
+        if (respuesta.msg) {
+          window.alert(respuesta.msg);
+        }
+        updateDatos(pagina);
+      });
+    }
+  };
+
   return (
     <>
       {productos.loading ? (
@@ -42,7 +67,7 @@ const TableProductos = () => {
           Cargando...
         </div>
       ) : (
-        <div>
+        <div className="mb-5">
           <table className="table">
             <thead>
               <tr>
@@ -50,6 +75,17 @@ const TableProductos = () => {
                 <th scope="col">Disponible</th>
                 <th scope="col">Precio</th>
                 <th scope="col">Categoria</th>
+                <th className="d-flex justify-content-end">
+                  <button
+                    className="btn btn-success"
+                    onClick={() => {
+                      setActualizar("");
+                      handleShow();
+                    }}
+                  >
+                    <i className="fa fa-user-plus" aria-hidden="true"></i>
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -63,10 +99,42 @@ const TableProductos = () => {
                     ${producto.precio}
                   </td>
                   <td>{producto.categoria.nombre}</td>
+                  <td>
+                    <button
+                      className="btn btn-warning ms-2"
+                      onClick={() => {
+                        setActualizar(producto._id);
+                        handleShow();
+                      }}
+                    >
+                      <i
+                        className="fa fa-pencil-square-o"
+                        aria-hidden="true"
+                      ></i>
+                    </button>
+                    <button
+                      className="btn btn-danger ms-2"
+                      onClick={() => borrarProducto(producto._id)}
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <div className="d-flex justify-content-center">
+            <BtnPaginacion
+              totPag={totPag}
+              pagina={pagina}
+              setPagina={setPagina}
+            />
+            <ModalProductos
+              show={show}
+              handleClose={handleClose}
+              actualizar={actualizar}
+            />
+          </div>
         </div>
       )}
     </>
