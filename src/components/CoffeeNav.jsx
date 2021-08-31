@@ -11,6 +11,7 @@ import {
 import logo from "../assets/coffee.png";
 
 const CoffeeNav = () => {
+  const history = useHistory();
   const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
@@ -18,7 +19,6 @@ const CoffeeNav = () => {
     setUsuario(datos.usuario);
   }, []);
 
-  const history = useHistory();
   const logout = () => {
     localStorage.clear();
     history.push("/login");
@@ -40,7 +40,11 @@ const CoffeeNav = () => {
 
             <DropdownButton
               id="dropdown-basic-button"
-              title={<i className="fa fa-user-circle-o" aria-hidden="true"></i>}
+              title={
+                <i className="fa fa-user-circle-o" aria-hidden="true">
+                  <span> {usuario?.nombre}</span>
+                </i>
+              }
               className="dropstart ms-2"
               variant="success"
             >

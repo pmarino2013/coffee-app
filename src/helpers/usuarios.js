@@ -13,6 +13,7 @@ export const getUsuarios = async (desde) => {
   return datos;
 };
 
+//get con el id
 export const getUsuarioId = async (id) => {
   const resp = await fetch(`${url}/api/usuarios/${id}`, {
     method: "GET",
@@ -26,6 +27,7 @@ export const getUsuarioId = async (id) => {
   return datos;
 };
 
+//post de usuario
 export const postUsuario = async (data) => {
   const resp = await fetch(`${url}/api/usuarios`, {
     method: "POST",
@@ -40,6 +42,7 @@ export const postUsuario = async (data) => {
   return datos;
 };
 
+//put de usuario- actualizar
 export const putUsuario = async (id, data) => {
   const resp = await fetch(`${url}/api/usuarios/${id}`, {
     method: "PUT",
@@ -54,6 +57,7 @@ export const putUsuario = async (id, data) => {
   return datos;
 };
 
+//delete de usuario
 export const deleteUsuario = async (id) => {
   const resp = await fetch(`${url}/api/usuarios/${id}`, {
     method: "DELETE",

@@ -1,7 +1,7 @@
-const url = "http://localhost:8080";
+const url = "http://localhost:8080/api/auth/login";
 
 export const postAuth = async (data) => {
-  const resp = await fetch(`${url}/api/auth/login`, {
+  const resp = await fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {

@@ -5,6 +5,7 @@ import ModalCategorias from "./modales/ModalCategorias";
 
 const TableCategorias = () => {
   const [actualizar, setActualizar] = useState("");
+
   const [categorias, setCategorias] = useState({
     datos: [],
     loading: true,

@@ -1,11 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 // import Swal from "sweetalert2";
 import { postAuth } from "../helpers/autentication";
 
 import logo from "../assets/coffee.png";
-import { useEffect } from "react";
 
 const Login = () => {
   const isMounted = useRef(true);
@@ -16,6 +15,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+
   const [btnDisable, setBtnDisable] = useState(false);
 
   const [login, setLogin] = useState({});

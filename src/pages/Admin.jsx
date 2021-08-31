@@ -7,6 +7,7 @@ import TableUsuario from "../components/TableUsuario";
 
 const Admin = () => {
   const [state, setState] = useState({ rol: "" });
+
   useEffect(() => {
     const datos = JSON.parse(localStorage.getItem("auth"));
     setState(datos.usuario);

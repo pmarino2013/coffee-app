@@ -5,13 +5,6 @@ import { Route, Redirect } from "react-router-dom";
 const ProtectedRoute = ({ component: Component, ...resto }) => {
   const auth = JSON.parse(localStorage.getItem("auth")) || null;
 
-  // let validar = tokenAuth.split(".")[1];
-  // validar = window.btoa(validar);
-  // if (window.atob(validar).includes("{")) {
-  //   validar = JSON.parse(window.atob(validar));
-  //   console.log(validar);
-  // }
-
   return (
     <Route
       {...resto}
