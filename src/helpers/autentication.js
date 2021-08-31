@@ -1,4 +1,5 @@
-const url = "http://localhost:8080/api/auth/login";
+// const url = "http://localhost:8080/api/auth/login";
+const url = "https://restserver-pm.herokuapp.com";
 
 export const postAuth = async (data) => {
   const resp = await fetch(url, {

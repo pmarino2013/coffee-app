@@ -1,4 +1,5 @@
-const url = "http://localhost:8080/api/productos";
+// const url = "http://localhost:8080/api/productos";
+const url = "https://restserver-pm.herokuapp.com/api/productos";
 
 //Traer todos los productos
 export const getProductos = async (desde) => {

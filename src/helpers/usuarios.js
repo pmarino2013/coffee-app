@@ -1,4 +1,5 @@
-const url = "http://localhost:8080";
+// const url = "http://localhost:8080";
+const url = "https://restserver-pm.herokuapp.com";
 
 export const getUsuarios = async (desde) => {
   const resp = await fetch(`${url}/api/usuarios?desde=${desde}`, {
