@@ -165,6 +165,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
                   onChange={handleChange}
                   required
                 >
+                  <option defaultValue="">Elije categoría</option>
                   {categorias.map((categoria) => (
                     <option key={categoria._id} value={categoria._id}>
                       {categoria.nombre}
