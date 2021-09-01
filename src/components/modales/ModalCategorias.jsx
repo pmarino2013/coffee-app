@@ -7,8 +7,9 @@ import {
   putCategoria,
 } from "../../helpers/categorias";
 
-const ModalCategorias = ({ show, handleClose, actualizar }) => {
+const ModalCategorias = ({ show, handleClose, actualizar, setActualizar }) => {
   const [loading, setLoading] = useState(false);
+  const [wait, setWait] = useState(false);
   const [formValue, setFormValue] = useState({
     nombre: "",
   });
@@ -18,10 +19,12 @@ const ModalCategorias = ({ show, handleClose, actualizar }) => {
       nombre: "",
     });
     if (actualizar) {
+      setWait(true);
       getCategoriaId(actualizar).then((respuesta) => {
         setFormValue({
           nombre: respuesta.categoria.nombre,
         });
+        setWait(false);
       });
     }
   }, [actualizar]);
@@ -50,6 +53,7 @@ const ModalCategorias = ({ show, handleClose, actualizar }) => {
         setFormValue({
           nombre: "",
         });
+        setActualizar("");
         handleClose();
       });
     } else {
@@ -65,6 +69,7 @@ const ModalCategorias = ({ show, handleClose, actualizar }) => {
         setFormValue({
           nombre: "",
         });
+        setActualizar("");
         handleClose();
       });
     }
@@ -76,30 +81,36 @@ const ModalCategorias = ({ show, handleClose, actualizar }) => {
         <Modal.Header closeButton>
           <Modal.Title>Nueva categoria</Modal.Title>
         </Modal.Header>
-        <form onSubmit={handleSubmit}>
+        {wait ? (
           <Modal.Body>
-            <div className="form-group">
-              <label>Nombre</label>
-              <input
-                type="text"
-                name="nombre"
-                className="form-control"
-                placeholder="Ej: Bebidas saborizadas"
-                required
-                value={formValue.nombre}
-                onChange={handleChange}
-              />
-            </div>
+            <h3 className="text-center">Cargando...</h3>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="success" type="submit" disabled={loading}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <Modal.Body>
+              <div className="form-group">
+                <label>Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  className="form-control"
+                  placeholder="Ej: Bebidas saborizadas"
+                  required
+                  value={formValue.nombre}
+                  onChange={handleChange}
+                />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" type="submit" disabled={loading}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </form>
+        )}
       </Modal>
     </div>
   );

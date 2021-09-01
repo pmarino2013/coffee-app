@@ -29,7 +29,10 @@ const TableCategorias = () => {
     updateDatos(pagina);
   }, [pagina, show]);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setActualizar("");
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   const updateDatos = (pag) => {
@@ -120,10 +123,12 @@ const TableCategorias = () => {
               pagina={pagina}
               setPagina={setPagina}
             />
+
             <ModalCategorias
               show={show}
               handleClose={handleClose}
               actualizar={actualizar}
+              setActualizar={setActualizar}
             />
           </div>
         </div>

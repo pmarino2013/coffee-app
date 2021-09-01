@@ -10,6 +10,7 @@ import {
 import { getCategorias } from "../../helpers/categorias";
 const ModalProductos = ({ show, handleClose, actualizar }) => {
   const [loading, setLoading] = useState(false);
+  const [wait, setWait] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [formValue, setFormValue] = useState({
     nombre: "",
@@ -34,6 +35,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
       disponible: true,
     });
     if (actualizar) {
+      setWait(true);
       getProducto(actualizar).then((respuesta) => {
         setFormValue({
           nombre: respuesta.producto.nombre,
@@ -42,6 +44,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
           categoria: respuesta.producto.categoria._id,
           disponible: respuesta.producto.disponible,
         });
+        setWait(false);
       });
     }
   }, [actualizar]);
@@ -114,78 +117,84 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
             {actualizar ? "Modificar producto" : "Nuevo producto"}
           </Modal.Title>
         </Modal.Header>
-        <form onSubmit={handleSubmit}>
+        {wait ? (
           <Modal.Body>
-            <div className="form-group">
-              <label>Nombre</label>
-              <input
-                type="text"
-                name="nombre"
-                className="form-control"
-                placeholder="Ej: Café Torrado"
-                required
-                value={formValue.nombre}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Precio</label>
-              <input
-                type="number"
-                name="precio"
-                className="form-control"
-                value={formValue.precio}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Descripción</label>
-              <textarea
-                type="text"
-                name="descripcion"
-                className="form-control"
-                value={formValue.descripcion}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Categorias</label>
-              <select
-                className="form-select"
-                name="categoria"
-                value={formValue.categoria}
-                onChange={handleChange}
-                required
-              >
-                {categorias.map((categoria) => (
-                  <option key={categoria._id} value={categoria._id}>
-                    {categoria.nombre}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                checked={formValue.disponible}
-                value={formValue.disponible}
-                onChange={handleChange}
-                name="disponible"
-              />
-              <label>Disponible</label>
-            </div>
+            <h3 className="text-center">Cargando...</h3>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="success" type="submit" disabled={loading}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <Modal.Body>
+              <div className="form-group">
+                <label>Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  className="form-control"
+                  placeholder="Ej: Café Torrado"
+                  required
+                  value={formValue.nombre}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>Precio</label>
+                <input
+                  type="number"
+                  name="precio"
+                  className="form-control"
+                  value={formValue.precio}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>Descripción</label>
+                <textarea
+                  type="text"
+                  name="descripcion"
+                  className="form-control"
+                  value={formValue.descripcion}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>Categorias</label>
+                <select
+                  className="form-select"
+                  name="categoria"
+                  value={formValue.categoria}
+                  onChange={handleChange}
+                  required
+                >
+                  {categorias.map((categoria) => (
+                    <option key={categoria._id} value={categoria._id}>
+                      {categoria.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={formValue.disponible}
+                  value={formValue.disponible}
+                  onChange={handleChange}
+                  name="disponible"
+                />
+                <label>Disponible</label>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" type="submit" disabled={loading}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </form>
+        )}
       </Modal>
     </div>
   );

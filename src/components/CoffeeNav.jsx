@@ -40,7 +40,12 @@ const CoffeeNav = () => {
 
             <DropdownButton
               id="dropdown-basic-button"
-              title={<i className="fa fa-user-circle-o" aria-hidden="true"></i>}
+              title={
+                <>
+                  <i className="fa fa-user-circle-o" aria-hidden="true"></i>
+                  <span> {usuario?.nombre}</span>
+                </>
+              }
               className="dropstart ms-2"
               variant="success"
             >

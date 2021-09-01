@@ -29,7 +29,10 @@ const TableProductos = () => {
     updateDatos(pagina);
   }, [pagina, show]);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setActualizar("");
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   const updateDatos = (pag) => {
