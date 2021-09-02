@@ -4,12 +4,14 @@ import { getProductos } from "../helpers/productos";
 import CofeeCarousel from "../components/CofeeCarousel";
 import CardProd from "../components/CardProd";
 import BtnPaginacion from "../components/BtnPaginacion";
+import Search from "../components/Search";
 
 const Inicio = () => {
   const [productos, setProductos] = useState([]);
   const [pagina, setPagina] = useState(0);
   const [totPag, setTotpag] = useState(0);
   // console.log(pagina);
+
   useEffect(() => {
     getProductos().then((respuesta) => {
       // console.log(respuesta);
@@ -31,6 +33,7 @@ const Inicio = () => {
       </div>
       <div className="container mb-3">
         <h1 className="mb-3">Elige a tu gusto ☕</h1>
+        <Search />
         <div className="d-flex justify-content-center my-3">
           <BtnPaginacion
             pagina={pagina}

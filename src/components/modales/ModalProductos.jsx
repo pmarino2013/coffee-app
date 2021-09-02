@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 
@@ -76,10 +77,20 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
       putProducto(actualizar, formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+          return Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: respuesta.errors[0].msg,
+          });
+          // return window.alert(respuesta.errors[0].msg);
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          Swal.fire({
+            icon: "info",
+
+            text: respuesta.msg,
+          });
+          // window.alert(respuesta.msg);
         }
         setLoading(false);
         limpiarCampos();
@@ -89,10 +100,26 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
       postProducto(formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+
+          return Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: respuesta.errors[0].msg,
+          });
+          // return window.alert(respuesta.errors[0].msg);
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          Swal.fire({
+            icon: "info",
+            text: respuesta.msg,
+          });
+          // window.alert(respuesta.msg);
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "OK",
+            text: "Producto guardado con éxito",
+          });
         }
         setLoading(false);
         limpiarCampos();

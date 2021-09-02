@@ -16,16 +16,6 @@ const TableUsuario = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    getUsuarios().then((respuesta) => {
-      setUsuarios({
-        datos: respuesta.usuarios,
-        loading: false,
-      });
-      setTotpag(respuesta.total);
-    });
-  }, []);
-
-  useEffect(() => {
     updateDatos(pagina);
   }, [pagina, show]);
 
@@ -38,6 +28,7 @@ const TableUsuario = () => {
         datos: respuesta.usuarios,
         loading: false,
       });
+      setTotpag(respuesta.total);
     });
   };
 

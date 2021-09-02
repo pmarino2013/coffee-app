@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import {
@@ -48,11 +49,22 @@ const ModalCategorias = ({ show, handleClose, actualizar, setActualizar }) => {
       putCategoria(actualizar, formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+          return Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: respuesta.errors[0].msg,
+          });
+          // return window.alert(respuesta.errors[0].msg);
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          Swal.fire({
+            icon: "info",
+
+            text: respuesta.msg,
+          });
+          // window.alert(respuesta.msg);
         }
+
         setLoading(false);
         limpiarCampos();
 
@@ -62,10 +74,23 @@ const ModalCategorias = ({ show, handleClose, actualizar, setActualizar }) => {
       postCategoria(formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+          return Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: respuesta.errors[0].msg,
+          });
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          Swal.fire({
+            icon: "info",
+            text: respuesta.msg,
+          });
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "OK",
+            text: "Categoría guardada con éxito",
+          });
         }
         setLoading(false);
         limpiarCampos();

@@ -17,16 +17,6 @@ const TableCategorias = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    getCategorias().then((respuesta) => {
-      setCategorias({
-        datos: respuesta.categorias,
-        loading: false,
-      });
-      setTotpag(respuesta.Total);
-    });
-  }, []);
-
-  useEffect(() => {
     updateDatos(pagina);
   }, [pagina, show]);
 
@@ -42,6 +32,7 @@ const TableCategorias = () => {
         datos: respuesta.categorias,
         loading: false,
       });
+      setTotpag(respuesta.Total);
     });
   };
 
@@ -71,6 +62,7 @@ const TableCategorias = () => {
           } else {
             Swal.fire("Borrado!", "La categoría ha sido borrada.", "success");
           }
+          console.log(pagina);
           updateDatos(pagina);
         });
       }
