@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 import { getUsuarios, deleteUsuario } from "../helpers/usuarios";
 import BtnPaginacion from "./BtnPaginacion";
@@ -28,10 +29,6 @@ const TableUsuario = () => {
     updateDatos(pagina);
   }, [pagina, show]);
 
-  // useEffect(() => {
-  //   updateDatos(pagina);
-  // }, [show]);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -49,20 +46,55 @@ const TableUsuario = () => {
     const user = JSON.parse(localStorage.getItem("auth")).usuario;
 
     if (user.uid === uid) {
-      return window.alert("No puede eliminar el usuario en uso");
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: '"No puede eliminar el usuario en uso"',
+      });
+      // window.alert("No puede eliminar el usuario en uso");
     }
 
-    let validar = window.confirm(
-      `Esta seguro que quiere eliminar este usuario?`
-    );
-    if (validar) {
-      deleteUsuario(uid).then((respuesta) => {
-        if (respuesta.msg) {
-          window.alert(respuesta.msg);
-        }
-        updateDatos(pagina);
-      });
-    }
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "El usuario será inactivado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#7B7A7A",
+      confirmButtonText: "Si, borrar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUsuario(uid).then((respuesta) => {
+          if (respuesta.msg) {
+            Swal.fire({
+              icon: "info",
+
+              text: respuesta.msg,
+            });
+          } else {
+            Swal.fire("Borrado!", "El usuario ha sido borrado.", "success");
+          }
+          updateDatos(pagina);
+        });
+      }
+    });
+
+    // let validar = window.confirm(
+    //   `Esta seguro que quiere eliminar este usuario?`
+    // );
+    // if (validar) {
+    //   deleteUsuario(uid).then((respuesta) => {
+    //     if (respuesta.msg) {
+    //       Swal.fire({
+    //         icon: "info",
+
+    //         text: respuesta.msg,
+    //       });
+
+    //     }
+    //     updateDatos(pagina);
+    //   });
+    // }
   };
 
   return (
@@ -91,7 +123,7 @@ const TableUsuario = () => {
                 <tr key={usuario.uid}>
                   <th scope="row">{usuario.nombre}</th>
                   <td>{usuario.email}</td>
-                  {/* <td>{usuario.estado ? "Activo" : "Inactivo"}</td> */}
+
                   <th>
                     <button
                       className="btn btn-danger"
@@ -109,6 +141,7 @@ const TableUsuario = () => {
             pagina={pagina}
             setPagina={setPagina}
           />
+
           <ModalUsuarioAdd show={show} handleClose={handleClose} />
         </div>
       )}

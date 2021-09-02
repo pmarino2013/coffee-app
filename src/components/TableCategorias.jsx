@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import { getCategorias, deleteCategoria } from "../helpers/categorias";
 import BtnPaginacion from "./BtnPaginacion";
 import ModalCategorias from "./modales/ModalCategorias";
@@ -50,17 +51,43 @@ const TableCategorias = () => {
       return categoria._id === uid;
     });
 
-    let validar = window.confirm(
-      `Esta seguro que quiere inactivar ${categ.nombre} de categorías?`
-    );
-    if (validar) {
-      deleteCategoria(uid).then((respuesta) => {
-        if (respuesta.msg) {
-          window.alert(respuesta.msg);
-        }
-        updateDatos(pagina);
-      });
-    }
+    Swal.fire({
+      title: "Esta seguro?",
+      text: `La categoría ${categ.nombre} será inactivada`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#7B7A7A",
+      confirmButtonText: "Si, borrar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteCategoria(uid).then((respuesta) => {
+          if (respuesta.msg) {
+            Swal.fire({
+              icon: "info",
+
+              text: respuesta.msg,
+            });
+          } else {
+            Swal.fire("Borrado!", "La categoría ha sido borrada.", "success");
+          }
+          updateDatos(pagina);
+        });
+      }
+    });
+
+    // let validar = window.confirm(
+    //   `Esta seguro que quiere inactivar ${categ.nombre} de categorías?`
+    // );
+    // if (validar) {
+    //   deleteCategoria(uid).then((respuesta) => {
+    //     if (respuesta.msg) {
+
+    //       window.alert(respuesta.msg);
+    //     }
+    //     updateDatos(pagina);
+    //   });
+    // }
   };
 
   return (

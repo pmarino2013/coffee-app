@@ -15,9 +15,7 @@ const ModalCategorias = ({ show, handleClose, actualizar, setActualizar }) => {
   });
 
   useEffect(() => {
-    setFormValue({
-      nombre: "",
-    });
+    limpiarCampos();
     if (actualizar) {
       setWait(true);
       getCategoriaId(actualizar).then((respuesta) => {
@@ -28,6 +26,12 @@ const ModalCategorias = ({ show, handleClose, actualizar, setActualizar }) => {
       });
     }
   }, [actualizar]);
+
+  const limpiarCampos = () => {
+    setFormValue({
+      nombre: "",
+    });
+  };
 
   const handleChange = (e) => {
     setFormValue({
@@ -50,10 +54,8 @@ const ModalCategorias = ({ show, handleClose, actualizar, setActualizar }) => {
           window.alert(respuesta.msg);
         }
         setLoading(false);
-        setFormValue({
-          nombre: "",
-        });
-        setActualizar("");
+        limpiarCampos();
+
         handleClose();
       });
     } else {
@@ -66,10 +68,8 @@ const ModalCategorias = ({ show, handleClose, actualizar, setActualizar }) => {
           window.alert(respuesta.msg);
         }
         setLoading(false);
-        setFormValue({
-          nombre: "",
-        });
-        setActualizar("");
+        limpiarCampos();
+
         handleClose();
       });
     }

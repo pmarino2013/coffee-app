@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import { postUsuario } from "../../helpers/usuarios";
 import { Modal, Button } from "react-bootstrap";
 const ModalUsuarioAdd = ({ show, handleClose }) => {
@@ -9,6 +10,14 @@ const ModalUsuarioAdd = ({ show, handleClose }) => {
     password: "",
     rol: "",
   });
+  const limpiarCampos = () => {
+    setFormValue({
+      nombre: "",
+      email: "",
+      password: "",
+      rol: "",
+    });
+  };
 
   const handleChange = (e) => {
     setFormValue({
@@ -26,15 +35,21 @@ const ModalUsuarioAdd = ({ show, handleClose }) => {
       //   console.log(respuesta);
       if (respuesta.errors) {
         setLoading(false);
-        return window.alert(respuesta.errors[0].msg);
+        return Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: respuesta.errors[0].msg,
+        });
+        // return window.alert(respuesta.errors[0].msg);
+      } else {
+        setLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: "OK",
+          text: `El usuario ${formValue.nombre} fue creado`,
+        });
       }
-      setLoading(false);
-      setFormValue({
-        nombre: "",
-        email: "",
-        password: "",
-        rol: "",
-      });
+      limpiarCampos();
       handleClose();
     });
   };

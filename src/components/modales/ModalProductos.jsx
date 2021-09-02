@@ -27,13 +27,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
   }, []);
 
   useEffect(() => {
-    setFormValue({
-      nombre: "",
-      precio: "",
-      descripcion: "",
-      categoria: "",
-      disponible: true,
-    });
+    limpiarCampos();
     if (actualizar) {
       setWait(true);
       getProducto(actualizar).then((respuesta) => {
@@ -63,6 +57,16 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
     }
   };
 
+  const limpiarCampos = () => {
+    setFormValue({
+      nombre: "",
+      precio: "",
+      descripcion: "",
+      categoria: "",
+      disponible: true,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -78,13 +82,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
           window.alert(respuesta.msg);
         }
         setLoading(false);
-        setFormValue({
-          nombre: "",
-          precio: "",
-          descripcion: "",
-          categoria: "",
-          disponible: true,
-        });
+        limpiarCampos();
         handleClose();
       });
     } else {
@@ -97,13 +95,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
           window.alert(respuesta.msg);
         }
         setLoading(false);
-        setFormValue({
-          nombre: "",
-          precio: "",
-          descripcion: "",
-          categoria: "",
-          disponible: true,
-        });
+        limpiarCampos();
         handleClose();
       });
     }
