@@ -77,7 +77,7 @@ const TableProductos = () => {
         </div>
       ) : (
         <div className="mb-5">
-          <table className="table">
+          <table className="table table-responsive">
             <thead>
               <tr>
                 <th scope="col">Nombre</th>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getProductos } from "../helpers/productos";
+import { buscarProd } from "../helpers/buscar";
 
 import CofeeCarousel from "../components/CofeeCarousel";
 import CardProd from "../components/CardProd";
@@ -8,6 +9,7 @@ import Search from "../components/Search";
 
 const Inicio = () => {
   const [productos, setProductos] = useState([]);
+  const [inputValue, setInputValue] = useState("");
   const [pagina, setPagina] = useState(0);
   const [totPag, setTotpag] = useState(0);
   // console.log(pagina);
@@ -21,10 +23,47 @@ const Inicio = () => {
   }, []);
 
   useEffect(() => {
-    getProductos(pagina).then((respuesta) => {
-      setProductos(respuesta.productos);
-    });
-  }, [pagina]);
+    if (inputValue) {
+      buscarProd(inputValue).then((respuesta) => {
+        const { productos, Total } = respuesta.results;
+        setProductos(productos);
+        setTotpag(Total);
+
+        // console.log(respuesta);
+        // setInputValue("");
+      });
+    } else {
+      getProductos(pagina).then((respuesta) => {
+        setProductos(respuesta.productos);
+        setTotpag(respuesta.Total);
+      });
+    }
+  }, [inputValue, pagina]);
+
+  // useEffect(() => {
+  //   getProductos(pagina).then((respuesta) => {
+  //     setProductos(respuesta.productos);
+  //   });
+  // }, [pagina]);
+
+  // const updateProd = () => {
+  //   if (inputValue) {
+  //     buscarProd(inputValue).then((respuesta) => {
+  //       const { productos, Total } = respuesta.results;
+  //       setProductos(productos);
+  //       setTotpag(Total);
+
+  //       // console.log(respuesta);
+  //       // setInputValue("");
+  //     });
+  //   } else {
+  //     getProductos(pagina).then((respuesta) => {
+  //       // console.log(respuesta);
+  //       setProductos(respuesta.productos);
+  //       setTotpag(respuesta.Total);
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -33,13 +72,15 @@ const Inicio = () => {
       </div>
       <div className="container mb-3">
         <h1 className="mb-3">Elige a tu gusto ☕</h1>
-        <Search />
+        <Search inputValue={inputValue} setInputValue={setInputValue} />
         <div className="d-flex justify-content-center my-3">
-          <BtnPaginacion
-            pagina={pagina}
-            totPag={totPag}
-            setPagina={setPagina}
-          />
+          {!inputValue && (
+            <BtnPaginacion
+              pagina={pagina}
+              totPag={totPag}
+              setPagina={setPagina}
+            />
+          )}
         </div>
         <CardProd productos={productos} />
       </div>

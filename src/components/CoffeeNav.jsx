@@ -50,23 +50,23 @@ const CoffeeNav = () => {
               variant="success"
             >
               <Dropdown.Item>
-                <NavLink className="nav-link" to="/">
+                <Link className="nav-link" to="/">
                   Perfil
-                </NavLink>
+                </Link>
               </Dropdown.Item>
 
               {usuario?.rol === "ADMIN_ROLE" && (
                 <Dropdown.Item>
-                  <NavLink className="nav-link" to="/admin">
+                  <Link className="nav-link" to="/admin">
                     Administración
-                  </NavLink>
+                  </Link>
                 </Dropdown.Item>
               )}
               <Dropdown.Divider />
               <Dropdown.Item>
-                <NavLink className="nav-link" to="#" onClick={logout}>
+                <Link className="nav-link" to="#" onClick={logout}>
                   Cerrar sesión
-                </NavLink>
+                </Link>
               </Dropdown.Item>
             </DropdownButton>
           </Nav>
