@@ -101,7 +101,11 @@ const TableProductos = () => {
               {productos.datos.map((producto) => (
                 <tr key={producto._id}>
                   <th scope="row">{producto.nombre}</th>
-                  <td>
+                  <td
+                    className={
+                      producto.disponible ? "text-success" : "text-danger"
+                    }
+                  >
                     {producto.disponible ? "Disponible" : "No disponible"}
                   </td>
                   <td className="d-flex justify-content-center">

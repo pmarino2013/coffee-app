@@ -12,11 +12,18 @@ import logo from "../assets/coffee.png";
 
 const CoffeeNav = () => {
   const [usuario, setUsuario] = useState(null);
+  const [countCarrito, setCountCarrito] = useState(0);
 
   useEffect(() => {
     const datos = JSON.parse(localStorage.getItem("auth"));
+
+    setCountCarrito(JSON.parse(localStorage.getItem("carrito")).length || 0);
     setUsuario(datos.usuario);
   }, []);
+
+  const updateCarrito = () => {
+    setCountCarrito(JSON.parse(localStorage.getItem("carrito")).length || 0);
+  };
 
   const history = useHistory();
   const logout = () => {
@@ -24,7 +31,7 @@ const CoffeeNav = () => {
     history.push("/login");
   };
   return (
-    <Navbar bg="dark" expand="lg">
+    <Navbar bg="dark" expand="lg" className="sticky-top">
       <Container>
         <Navbar.Brand>
           <Link className="nav-link text-white" to="/">
@@ -48,10 +55,17 @@ const CoffeeNav = () => {
               }
               className="dropstart ms-2"
               variant="success"
+              onClick={updateCarrito}
             >
               <Dropdown.Item>
                 <Link className="nav-link" to="/">
                   Perfil
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Link className="nav-link" to="/">
+                  <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                  {countCarrito}
                 </Link>
               </Dropdown.Item>
 

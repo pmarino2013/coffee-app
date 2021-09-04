@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const CardProd = ({ productos }) => {
+  const [carrito, setCarrito] = useState([]);
+  const uid = JSON.parse(localStorage.getItem("auth")).usuario.uid;
+  useEffect(() => {
+    setCarrito(JSON.parse(localStorage.getItem("carrito")) || []);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }, [carrito]);
+
+  const agregarCarrito = (id) => {
+    setCarrito([
+      ...carrito,
+      {
+        producid: id,
+        uid,
+      },
+    ]);
+  };
+
   return (
     <>
       <div className="row row-cols-1 row-cols-md-3 g-4">
@@ -21,7 +41,12 @@ const CardProd = ({ productos }) => {
                 {producto.disponible ? (
                   <div className="d-flex justify-content-between align-items-center">
                     <span className="text-disponible">Disponible</span>
-                    <button className="btn btn-success">Elegir</button>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => agregarCarrito(producto._id)}
+                    >
+                      Elegir
+                    </button>
                   </div>
                 ) : (
                   <span className="text-nodisponible">No disponible</span>
