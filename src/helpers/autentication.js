@@ -1,8 +1,9 @@
 // const url = "http://localhost:8080/api/auth/login";
-const url = "https://restserver-pm.herokuapp.com";
+// const url = "https://backend-mentor-22i.herokuapp.com/api/auth/login";
 
 export const postAuth = async (data) => {
-  const resp = await fetch(url, {
+  console.log(data);
+  const resp = await fetch(`${process.env.REACT_APP_URL}auth/login`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {

@@ -1,5 +1,6 @@
 // const url = "http://localhost:8080/api/categorias";
-const url = "https://restserver-pm.herokuapp.com/api/categorias";
+const url = `${process.env.REACT_APP_URL}categorias`;
+
 export const getCategorias = async (desde) => {
   const resp = await fetch(`${url}?desde=${desde}`, {
     method: "GET",
