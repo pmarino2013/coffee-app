@@ -17,7 +17,7 @@ const CoffeeNav = () => {
   useEffect(() => {
     const datos = JSON.parse(localStorage.getItem("auth"));
 
-    setCountCarrito(JSON.parse(localStorage.getItem("carrito")).length || 0);
+    setCountCarrito(JSON.parse(localStorage.getItem("carrito"))?.length || 0);
     setUsuario(datos.usuario);
   }, []);
 

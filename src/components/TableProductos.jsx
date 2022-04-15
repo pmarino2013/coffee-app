@@ -28,11 +28,12 @@ const TableProductos = () => {
 
   const updateDatos = (pag) => {
     getProductos(pag).then((respuesta) => {
+      console.log(respuesta);
       setProductos({
         datos: respuesta.productos,
         loading: false,
       });
-      setTotpag(respuesta.Total);
+      setTotpag(respuesta.total);
     });
   };
 

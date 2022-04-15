@@ -10,6 +10,6 @@ export const postAuth = async (data) => {
     },
   });
   const datos = await resp.json();
-
+  console.log(datos);
   return datos;
 };

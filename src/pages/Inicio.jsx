@@ -18,16 +18,16 @@ const Inicio = () => {
     getProductos().then((respuesta) => {
       // console.log(respuesta);
       setProductos(respuesta.productos);
-      setTotpag(respuesta.Total);
+      setTotpag(respuesta.total);
     });
   }, []);
 
   useEffect(() => {
     if (inputValue) {
       buscarProd(inputValue).then((respuesta) => {
-        const { productos, Total } = respuesta.results;
+        const productos = respuesta.results;
         setProductos(productos);
-        setTotpag(Total);
+        // setTotpag(total);
 
         // console.log(respuesta);
         // setInputValue("");
@@ -35,7 +35,7 @@ const Inicio = () => {
     } else {
       getProductos(pagina).then((respuesta) => {
         setProductos(respuesta.productos);
-        setTotpag(respuesta.Total);
+        setTotpag(respuesta.total);
       });
     }
   }, [inputValue, pagina]);

@@ -32,7 +32,7 @@ const TableCategorias = () => {
         datos: respuesta.categorias,
         loading: false,
       });
-      setTotpag(respuesta.Total);
+      setTotpag(respuesta.total);
     });
   };
 

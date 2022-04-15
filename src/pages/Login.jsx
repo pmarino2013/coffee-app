@@ -13,7 +13,7 @@ const Login = () => {
   const history = useHistory();
 
   const [formValue, setFormValue] = useState({
-    email: "",
+    correo: "",
     password: "",
   });
   const [btnDisable, setBtnDisable] = useState(false);
@@ -44,18 +44,19 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = formValue;
+    const { correo, password } = formValue;
 
-    if (email && password) {
+    if (correo && password) {
       setBtnDisable(true);
       if (isMounted.current) {
         postAuth(formValue).then((respuesta) => {
+          console.log(respuesta);
           setLogin(respuesta);
 
           setBtnDisable(false);
 
           setFormValue({
-            email: "",
+            correo: "",
             password: "",
           });
         });
@@ -86,8 +87,8 @@ const Login = () => {
                   <input
                     type="email"
                     className="form-control"
-                    name="email"
-                    value={formValue.email}
+                    name="correo"
+                    value={formValue.correo}
                     onChange={handleChange}
                   />
                 </div>
