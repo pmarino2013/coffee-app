@@ -1,4 +1,4 @@
-const url = "https://restserver-pm.herokuapp.com/api/buscar";
+const url = `${process.env.REACT_APP_URL}buscar`;
 // const url = "http://localhost:8080/api/productos";
 
 export const buscarProd = async (termino, desde) => {

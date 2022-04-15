@@ -1,8 +1,8 @@
 // const url = "http://localhost:8080";
-const url = "https://restserver-pm.herokuapp.com";
+const url = process.env.REACT_APP_URL;
 
 export const postAuth = async (data) => {
-  const resp = await fetch(`${url}/api/auth/login`, {
+  const resp = await fetch(`${url}auth/login`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
