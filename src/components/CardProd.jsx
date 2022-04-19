@@ -29,8 +29,8 @@ const CardProd = ({ productos }) => {
             <div className="col" key={producto._id}>
               <div className="card h-100">
                 <img
-                  src="https://es.himgs.com/imagenes/estar-bien/20190111135512/cafe-beneficioso-perjudicial/0-635-445/cafenutricion-t.jpg"
-                  className="card-img-top"
+                  className="card-img"
+                  src={producto.img}
                   alt={producto.nombre}
                 />
                 <div className="card-body">
