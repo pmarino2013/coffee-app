@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import { getProductos, deleteProducto } from "../helpers/productos";
 import BtnPaginacion from "./BtnPaginacion";
 import ModalProductos from "./modales/ModalProductos";
@@ -16,28 +17,23 @@ const TableProductos = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    getProductos().then((respuesta) => {
-      setProductos({
-        datos: respuesta.productos,
-        loading: false,
-      });
-      setTotpag(respuesta.Total);
-    });
-  }, []);
-
-  useEffect(() => {
     updateDatos(pagina);
   }, [pagina, show]);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setActualizar("");
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   const updateDatos = (pag) => {
     getProductos(pag).then((respuesta) => {
+      console.log(respuesta);
       setProductos({
         datos: respuesta.productos,
         loading: false,
       });
+      setTotpag(respuesta.total);
     });
   };
 
@@ -47,17 +43,31 @@ const TableProductos = () => {
       return producto._id === uid;
     });
 
-    let validar = window.confirm(
-      `Esta seguro que quiere inactivar el producto ${produc.nombre}?`
-    );
-    if (validar) {
-      deleteProducto(uid).then((respuesta) => {
-        if (respuesta.msg) {
-          window.alert(respuesta.msg);
-        }
-        updateDatos(pagina);
-      });
-    }
+    Swal.fire({
+      title: "Esta seguro?",
+      text: `El producto ${produc.nombre} será inactivado`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#7B7A7A",
+      confirmButtonText: "Si, borrar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteProducto(uid).then((respuesta) => {
+          if (respuesta.msg) {
+            Swal.fire({
+              icon: "info",
+
+              text: respuesta.msg,
+            });
+          } else {
+            Swal.fire("Borrado!", "El producto ha sido borrada.", "success");
+          }
+          console.log(pagina);
+          updateDatos(pagina);
+        });
+      }
+    });
   };
 
   return (
@@ -68,7 +78,7 @@ const TableProductos = () => {
         </div>
       ) : (
         <div className="mb-5">
-          <table className="table">
+          <table className="table table-responsive">
             <thead>
               <tr>
                 <th scope="col">Nombre</th>
@@ -92,7 +102,11 @@ const TableProductos = () => {
               {productos.datos.map((producto) => (
                 <tr key={producto._id}>
                   <th scope="row">{producto.nombre}</th>
-                  <td>
+                  <td
+                    className={
+                      producto.disponible ? "text-success" : "text-danger"
+                    }
+                  >
                     {producto.disponible ? "Disponible" : "No disponible"}
                   </td>
                   <td className="d-flex justify-content-center">

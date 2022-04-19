@@ -1,6 +1,5 @@
 // const url = "http://localhost:8080/api/productos";
 const url = `${process.env.REACT_APP_URL}productos`;
-
 //Traer todos los productos
 export const getProductos = async (desde) => {
   const resp = await fetch(`${url}?desde=${desde}`, {

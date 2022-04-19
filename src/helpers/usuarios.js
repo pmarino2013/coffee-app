@@ -1,17 +1,15 @@
 // const url = "http://localhost:8080";
-// const url = "https://backend-mentor-22i.herokuapp.com";
+
+const url = process.env.REACT_APP_URL;
 
 export const getUsuarios = async (desde) => {
-  const resp = await fetch(
-    `${process.env.REACT_APP_URL}usuarios?desde=${desde}`,
-    {
-      method: "GET",
+  const resp = await fetch(`${url}usuarios?desde=${desde}`, {
+    method: "GET",
 
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    }
-  );
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
   const datos = await resp.json();
 
   return datos;
@@ -19,7 +17,7 @@ export const getUsuarios = async (desde) => {
 
 //get con el id
 export const getUsuarioId = async (id) => {
-  const resp = await fetch(`${process.env.REACT_APP_URL}usuarios/${id}`, {
+  const resp = await fetch(`${url}usuarios/${id}`, {
     method: "GET",
 
     headers: {
@@ -33,7 +31,7 @@ export const getUsuarioId = async (id) => {
 
 //post de usuario
 export const postUsuario = async (data) => {
-  const resp = await fetch(`${process.env.REACT_APP_URL}usuarios`, {
+  const resp = await fetch(`${url}usuarios`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -48,7 +46,7 @@ export const postUsuario = async (data) => {
 
 //put de usuario- actualizar
 export const putUsuario = async (id, data) => {
-  const resp = await fetch(`${process.env.REACT_APP_URL}usuarios/${id}`, {
+  const resp = await fetch(`${url}usuarios/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
     headers: {
@@ -63,7 +61,7 @@ export const putUsuario = async (id, data) => {
 
 //delete de usuario
 export const deleteUsuario = async (id) => {
-  const resp = await fetch(`${process.env.REACT_APP_URL}usuarios/${id}`, {
+  const resp = await fetch(`${url}usuarios/${id}`, {
     method: "DELETE",
 
     headers: {

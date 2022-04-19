@@ -13,18 +13,26 @@ import logo from "../assets/coffee.png";
 const CoffeeNav = () => {
   const history = useHistory();
   const [usuario, setUsuario] = useState(null);
+  const [countCarrito, setCountCarrito] = useState(0);
 
   useEffect(() => {
     const datos = JSON.parse(localStorage.getItem("auth"));
+
+    setCountCarrito(JSON.parse(localStorage.getItem("carrito"))?.length || 0);
     setUsuario(datos.usuario);
   }, []);
 
+  const updateCarrito = () => {
+    setCountCarrito(JSON.parse(localStorage.getItem("carrito")).length || 0);
+  };
+
+  // const history = useHistory();
   const logout = () => {
     localStorage.clear();
     history.push("/login");
   };
   return (
-    <Navbar bg="dark" expand="lg">
+    <Navbar bg="dark" expand="lg" className="sticky-top">
       <Container>
         <Navbar.Brand>
           <Link className="nav-link text-white" to="/">
@@ -41,31 +49,39 @@ const CoffeeNav = () => {
             <DropdownButton
               id="dropdown-basic-button"
               title={
-                <i className="fa fa-user-circle-o" aria-hidden="true">
+                <>
+                  <i className="fa fa-user-circle-o" aria-hidden="true"></i>
                   <span> {usuario?.nombre}</span>
-                </i>
+                </>
               }
               className="dropstart ms-2"
               variant="success"
+              onClick={updateCarrito}
             >
               <Dropdown.Item>
-                <NavLink className="nav-link" to="/">
+                <Link className="nav-link" to="/">
                   Perfil
-                </NavLink>
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Link className="nav-link" to="/">
+                  <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                  {countCarrito}
+                </Link>
               </Dropdown.Item>
 
               {usuario?.rol === "ADMIN_ROLE" && (
                 <Dropdown.Item>
-                  <NavLink className="nav-link" to="/admin">
+                  <Link className="nav-link" to="/admin">
                     Administración
-                  </NavLink>
+                  </Link>
                 </Dropdown.Item>
               )}
               <Dropdown.Divider />
               <Dropdown.Item>
-                <NavLink className="nav-link" to="#" onClick={logout}>
+                <Link className="nav-link" to="#" onClick={logout}>
                   Cerrar sesión
-                </NavLink>
+                </Link>
               </Dropdown.Item>
             </DropdownButton>
           </Nav>
