@@ -59,7 +59,7 @@ const CoffeeNav = () => {
               onClick={updateCarrito}
             >
               <Dropdown.Item>
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/perfil">
                   Perfil
                 </Link>
               </Dropdown.Item>

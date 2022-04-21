@@ -19,6 +19,9 @@ const Inicio = () => {
       // console.log(respuesta);
       setProductos(respuesta.productos);
       setTotpag(respuesta.total);
+      // console.log(
+      //   obtenerPayload(JSON.parse(localStorage.getItem("auth")).token)
+      // );
     });
   }, []);
 
@@ -63,6 +66,12 @@ const Inicio = () => {
   //       setTotpag(respuesta.Total);
   //     });
   //   }
+  // };
+
+  // const obtenerPayload = (token) => {
+  //   var base64Url = token.split(".")[1];
+  //   var base64 = base64Url.replace("-", "+").replace("_", "/");
+  //   return JSON.parse(window.atob(base64));
   // };
 
   return (

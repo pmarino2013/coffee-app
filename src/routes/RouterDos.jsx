@@ -4,12 +4,14 @@ import CoffeeNav from "../components/CoffeeNav";
 import Error404 from "../pages/Error404";
 import Inicio from "../pages/Inicio";
 import Admin from "../pages/Admin";
+import Perfil from "../pages/Perfil";
 const RouterDos = () => {
   return (
     <>
       <CoffeeNav />
       <Switch>
         <Route exact path="/" component={Inicio} />
+        <Route exact path="/perfil" component={Perfil} />
         <Route exact path="/admin" component={Admin} />
         <Route component={Error404} />
       </Switch>
