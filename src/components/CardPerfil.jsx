@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 
-import { subirArchivo } from "../helpers/uploads";
-import { getUsuarioId } from "../helpers/usuarios";
+import { subirArchivo } from "../helpers/uploads"; //Función para solicitar carga de archivos de backend
+import { getUsuarioId } from "../helpers/usuarios"; //Función traer datos de un usuario por su id
 
-import "../css/card.css";
+import "../css/card.css"; //Importar estilos de tarjeta
+import loading from "../assets/loading.gif"; //importar gif para usar durante la carga de imagen
+
 const CardPerfil = ({ id }) => {
-  //--------------------------------------------------
+  //Estado para manejar el input de carga de archivo
   const [inputValue, setInputValue] = useState({
     valor: "",
     archivo: {},
   });
-
-  //--------------------------------------------------
-
+  //Estado para cargar datos de usuario y recibir mensaje en caso de error
   const [datos, setDatos] = useState({
     loading: true,
     usuario: {},
     msg: null,
   });
+  //Estado para manejar si el botón está activo o no
   const [btnDisabled, setBtnDisabled] = useState(false);
+  //Estado para cargar imagen de loading o no
+  const [cargandoImagen, setCargandoImagen] = useState(false);
 
+  //Carga inicial de los datos de usuario
   useEffect(() => {
     getUsuarioId(id).then((response) => {
       setDatos({
@@ -30,24 +34,26 @@ const CardPerfil = ({ id }) => {
     });
   }, [id]);
 
-  //-------------------------------------------
+  //Función cuando el input cambia su valor
   const handleChange = (e) => {
     setInputValue({ valor: e.target.value, archivo: e.target.files[0] });
   };
-
-  //----------------------------------------
-
+  //Función submit del formulario
   const onSubmit = (e) => {
     e.preventDefault();
-    setBtnDisabled(true);
-    let { uid } = datos.usuario;
+    setBtnDisabled(true); //desabilito botón
+    let { uid } = datos.usuario; //obtengo el id de usuario
 
+    //Convierto a formdata los datos de la imagen
     const formData = new FormData();
-
     formData.append("archivo", inputValue.archivo);
 
+    //Se carga la imagen de loading en vez de la foto del avatar
+    setCargandoImagen(true);
+
+    //Petición para subir archivo
     subirArchivo(uid, formData).then((response) => {
-      console.log(response);
+      //si hay un error cargarlo en msg sino continuar con la carga de los datos
       if (response?.msg) {
         setDatos({
           ...datos,
@@ -60,7 +66,9 @@ const CardPerfil = ({ id }) => {
           msg: null,
         });
       }
-      setBtnDisabled(false);
+      setCargandoImagen(false); //quitamos la imagen de loading del avatar
+      setBtnDisabled(false); //se habilita boton
+      //Se inicializan los datos del input
       setInputValue({
         valor: "",
         archivo: {},
@@ -76,7 +84,15 @@ const CardPerfil = ({ id }) => {
         <div className="col-12 col-md-6 offset-md-3">
           <div className="our-team">
             <div className="picture">
-              <img className="img-fluid" src={datos.usuario.img} alt="imagen" />
+              {cargandoImagen ? (
+                <img className="img-fluid" src={loading} alt="imagen" />
+              ) : (
+                <img
+                  className="img-fluid"
+                  src={datos.usuario.img}
+                  alt="imagen"
+                />
+              )}
             </div>
             <div className="team-content">
               <h3 className="name">{datos.usuario.nombre}</h3>
