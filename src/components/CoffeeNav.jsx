@@ -12,18 +12,18 @@ import logo from "../assets/coffee.png";
 
 const CoffeeNav = () => {
   const [usuario, setUsuario] = useState(null);
-  const [countCarrito, setCountCarrito] = useState(0);
+  // const [countCarrito, setCountCarrito] = useState(0);
 
   useEffect(() => {
     const datos = JSON.parse(localStorage.getItem("auth"));
 
-    setCountCarrito(JSON.parse(localStorage.getItem("carrito"))?.length || 0);
+    // setCountCarrito(JSON.parse(localStorage.getItem("carrito"))?.length || 0);
     setUsuario(datos.usuario);
   }, []);
 
-  const updateCarrito = () => {
-    setCountCarrito(JSON.parse(localStorage.getItem("carrito")).length || 0);
-  };
+  // const updateCarrito = () => {
+  //   setCountCarrito(JSON.parse(localStorage.getItem("carrito")).length || 0);
+  // };
 
   const history = useHistory();
   const logout = () => {
@@ -55,7 +55,7 @@ const CoffeeNav = () => {
               }
               className="dropstart ms-2"
               variant="success"
-              onClick={updateCarrito}
+              // onClick={updateCarrito}
             >
               <Dropdown.Item>
                 <Link className="nav-link" to="/perfil">
@@ -65,7 +65,7 @@ const CoffeeNav = () => {
               <Dropdown.Item>
                 <Link className="nav-link" to="/">
                   <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                  {countCarrito}
+                  {/* {countCarrito} */}0
                 </Link>
               </Dropdown.Item>
 

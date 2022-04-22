@@ -50,7 +50,7 @@ const Login = () => {
       setBtnDisable(true);
       if (isMounted.current) {
         postAuth(formValue).then((respuesta) => {
-          console.log(respuesta);
+          // console.log(respuesta);
           setLogin(respuesta);
 
           setBtnDisable(false);
