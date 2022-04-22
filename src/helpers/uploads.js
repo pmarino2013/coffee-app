@@ -10,6 +10,7 @@ const subirArchivo = async (id, formdata) => {
     return data;
   } catch (error) {
     console.log(error);
+
     throw new Error("No se pudo hacer la petición");
   }
 };

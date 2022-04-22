@@ -16,6 +16,7 @@ const CardPerfil = ({ id }) => {
   const [datos, setDatos] = useState({
     loading: true,
     usuario: {},
+    msg: null,
   });
   const [btnDisabled, setBtnDisabled] = useState(false);
 
@@ -24,6 +25,7 @@ const CardPerfil = ({ id }) => {
       setDatos({
         loading: false,
         usuario: response.usuario,
+        msg: null,
       });
     });
   }, [id]);
@@ -45,10 +47,19 @@ const CardPerfil = ({ id }) => {
     formData.append("archivo", inputValue.archivo);
 
     subirArchivo(uid, formData).then((response) => {
-      setDatos({
-        ...datos,
-        usuario: response,
-      });
+      console.log(response);
+      if (response?.msg) {
+        setDatos({
+          ...datos,
+          msg: response.msg,
+        });
+      } else {
+        setDatos({
+          ...datos,
+          usuario: response,
+          msg: null,
+        });
+      }
       setBtnDisabled(false);
       setInputValue({
         valor: "",
@@ -103,23 +114,42 @@ const CardPerfil = ({ id }) => {
             </ul>
           </div>
           <div className="mb-3">
-            <form onSubmit={onSubmit}>
-              <input
-                className="form-control form-control-sm"
-                type="file"
-                name="archivo"
-                value={inputValue.valor}
-                onChange={handleChange}
-              />
-              <button
-                className="btn btn-primary mt-2 float-end"
-                type="submit"
-                disabled={btnDisabled}
-              >
-                Subir
-              </button>
+            <form onSubmit={onSubmit} className="d-flex align-items-center">
+              <div>
+                <input
+                  className="form-control form-control-sm"
+                  type="file"
+                  name="archivo"
+                  value={inputValue.valor}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="ms-2">
+                <button
+                  className="btn btn-primary  float-end btn-sm"
+                  type="submit"
+                  disabled={btnDisabled}
+                >
+                  Subir
+                </button>
+              </div>
             </form>
           </div>
+          {datos.msg && (
+            <div
+              className="alert alert-danger alert-dismissible fade show mt-3"
+              role="alert"
+            >
+              {datos.msg}
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+                onClick={() => setDatos({ ...datos, msg: null })}
+              ></button>
+            </div>
+          )}
         </div>
       )}
     </>
