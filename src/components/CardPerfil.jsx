@@ -5,7 +5,14 @@ import { getUsuarioId } from "../helpers/usuarios";
 
 import "../css/card.css";
 const CardPerfil = ({ id }) => {
-  const { register, handleSubmit } = useForm();
+  //--------------------------------------------------
+  const [inputValue, setInputValue] = useState({
+    valor: "",
+    archivo: {},
+  });
+
+  //--------------------------------------------------
+
   const [datos, setDatos] = useState({
     loading: true,
     usuario: {},
@@ -21,21 +28,32 @@ const CardPerfil = ({ id }) => {
     });
   }, [id]);
 
-  const onSubmit = (data) => {
+  //-------------------------------------------
+  const handleChange = (e) => {
+    setInputValue({ valor: e.target.value, archivo: e.target.files[0] });
+  };
+
+  //----------------------------------------
+
+  const onSubmit = (e) => {
+    e.preventDefault();
     setBtnDisabled(true);
     let { uid } = datos.usuario;
 
     const formData = new FormData();
 
-    formData.append("archivo", data.archivo[0]);
+    formData.append("archivo", inputValue.archivo);
 
     subirArchivo(uid, formData).then((response) => {
-      // console.log(response);
       setDatos({
         ...datos,
         usuario: response,
       });
       setBtnDisabled(false);
+      setInputValue({
+        valor: "",
+        archivo: {},
+      });
     });
   };
 
@@ -85,11 +103,13 @@ const CardPerfil = ({ id }) => {
             </ul>
           </div>
           <div className="mb-3">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={onSubmit}>
               <input
                 className="form-control form-control-sm"
                 type="file"
-                {...register("archivo")}
+                name="archivo"
+                value={inputValue.valor}
+                onChange={handleChange}
               />
               <button
                 className="btn btn-primary mt-2 float-end"
