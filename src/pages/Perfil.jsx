@@ -2,6 +2,7 @@ import React from "react";
 import CardPerfil from "../components/CardPerfil";
 
 const Perfil = () => {
+  let id = JSON.parse(localStorage.getItem("auth")).usuario.uid;
   return (
     <div className="container">
       <div className="row">
@@ -11,7 +12,7 @@ const Perfil = () => {
         </div>
       </div>
       <div className="row">
-        <CardPerfil />
+        <CardPerfil id={id} />
       </div>
     </div>
   );
