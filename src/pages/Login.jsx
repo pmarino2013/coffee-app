@@ -114,17 +114,21 @@ const Login = () => {
                   </button>
                 </div>
 
-                {login.ok === false && (
-                  <div className="alert alert-danger mt-3" role="alert">
+                {login?.msg && (
+                  <div
+                    className="alert alert-danger alert-dismissible fade show mt-3"
+                    role="alert"
+                  >
                     {login.msg}
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                      onClick={() => setLogin({})}
+                    ></button>
                   </div>
                 )}
-
-                {/* {login.ok === true && (
-                  <div className="alert alert-success mt-3" role="alert">
-                    {login.msg}
-                  </div>
-                )} */}
               </form>
             </div>
           </div>

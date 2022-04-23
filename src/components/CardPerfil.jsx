@@ -102,30 +102,34 @@ const CardPerfil = ({ id }) => {
               <li>
                 <a
                   href="https://codepen.io/collection/XdWJOQ/"
-                  className="fa fa-facebook"
                   aria-hidden="true"
-                ></a>
+                >
+                  <i className="fa fa-facebook" aria-hidden="true"></i>
+                </a>
               </li>
               <li>
                 <a
                   href="https://codepen.io/collection/XdWJOQ/"
-                  className="fa fa-twitter"
                   aria-hidden="true"
-                ></a>
+                >
+                  <i className="fa fa-twitter" aria-hidden="true"></i>
+                </a>
               </li>
               <li>
                 <a
                   href="https://codepen.io/collection/XdWJOQ/"
-                  className="fa fa-google-plus"
                   aria-hidden="true"
-                ></a>
+                >
+                  <i className="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
               </li>
               <li>
                 <a
                   href="https://codepen.io/collection/XdWJOQ/"
-                  className="fa fa-linkedin"
                   aria-hidden="true"
-                ></a>
+                >
+                  <i className="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
               </li>
             </ul>
           </div>

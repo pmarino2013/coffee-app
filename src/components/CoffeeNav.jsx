@@ -57,31 +57,25 @@ const CoffeeNav = () => {
               variant="success"
               // onClick={updateCarrito}
             >
-              <Dropdown.Item>
-                <Link className="nav-link" to="/perfil">
-                  Perfil
-                </Link>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <Link className="nav-link" to="/">
-                  <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                  {/* {countCarrito} */}0
-                </Link>
-              </Dropdown.Item>
+              <Link className="dropdown-item" to="/perfil">
+                Perfil
+              </Link>
+
+              <Link className="dropdown-item" to="/">
+                <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                {/* {countCarrito} */}0
+              </Link>
 
               {usuario?.rol === "ADMIN_ROLE" && (
-                <Dropdown.Item>
-                  <Link className="nav-link" to="/admin">
-                    Administración
-                  </Link>
-                </Dropdown.Item>
+                <Link className="dropdown-item" to="/admin">
+                  Administración
+                </Link>
               )}
               <Dropdown.Divider />
-              <Dropdown.Item>
-                <Link className="nav-link" to="#" onClick={logout}>
-                  Cerrar sesión
-                </Link>
-              </Dropdown.Item>
+
+              <Link className="dropdown-item" to="#" onClick={logout}>
+                Cerrar sesión
+              </Link>
             </DropdownButton>
           </Nav>
         </Navbar.Collapse>
