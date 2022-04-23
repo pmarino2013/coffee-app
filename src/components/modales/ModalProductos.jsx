@@ -9,6 +9,8 @@ import {
   putProducto,
 } from "../../helpers/productos";
 import { getCategorias } from "../../helpers/categorias";
+import { subirArchivoProd } from "../../helpers/uploads";
+
 const ModalProductos = ({ show, handleClose, actualizar }) => {
   const [loading, setLoading] = useState(false);
   const [wait, setWait] = useState(false);
@@ -19,6 +21,11 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
     descripcion: "",
     categoria: "",
     disponible: true,
+  });
+  const [imagen, setImagen] = useState({
+    valor: "",
+    archivo: {},
+    msg: null,
   });
 
   useEffect(() => {
@@ -32,6 +39,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
     if (actualizar) {
       setWait(true);
       getProducto(actualizar).then((respuesta) => {
+        localStorage.setItem("idProd", JSON.stringify(respuesta.producto._id));
         setFormValue({
           nombre: respuesta.producto.nombre,
           precio: respuesta.producto.precio,
@@ -39,6 +47,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
           categoria: respuesta.producto.categoria._id,
           disponible: respuesta.producto.disponible,
         });
+
         setWait(false);
       });
     }
@@ -58,6 +67,10 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
     }
   };
 
+  const imageChange = ({ target }) => {
+    setImagen({ valor: target.value, archivo: target.files[0], msg: null });
+  };
+
   const limpiarCampos = () => {
     setFormValue({
       nombre: "",
@@ -68,10 +81,36 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
     });
   };
 
+  const prepararImagen = () => {
+    const id = JSON.parse(localStorage.getItem("idProd"));
+
+    //Convierto a formdata los datos de la imagen
+    const formData = new FormData();
+    formData.append("archivo", imagen.archivo);
+
+    //Petición para subir archivo
+    subirArchivoProd(id, formData).then((response) => {
+      //si hay un error cargarlo en msg sino continuar con la carga de los datos
+      if (response?.msg) {
+        setImagen({
+          ...imagen,
+          msg: response.msg,
+        });
+      } else {
+        setImagen({
+          valor: "",
+          archivo: {},
+          msg: null,
+        });
+      }
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setLoading(true);
+    prepararImagen();
 
     if (actualizar) {
       putProducto(actualizar, formValue).then((respuesta) => {
@@ -94,6 +133,7 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
         }
         setLoading(false);
         limpiarCampos();
+
         handleClose();
       });
     } else {
@@ -204,6 +244,20 @@ const ModalProductos = ({ show, handleClose, actualizar }) => {
                 />
                 <label>Disponible</label>
               </div>
+              {actualizar && (
+                <div className="my-3 ">
+                  <div>
+                    <input
+                      className="form-control form-control-sm"
+                      type="file"
+                      name="archivo"
+                      accept="image/*"
+                      value={formValue.img}
+                      onChange={imageChange}
+                    />
+                  </div>
+                </div>
+              )}
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
